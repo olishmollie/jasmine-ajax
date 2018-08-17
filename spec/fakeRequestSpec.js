@@ -780,6 +780,28 @@ describe('FakeRequest', function() {
     expect(request.response).toEqual('foo');
   });
 
+  it('respects responseType if set before the request is made', function() {
+    var request = new this.FakeRequest();
+    request.open();
+    request.send();
+
+    request.responseType = 'json';
+    request.respondWith({ status: 200, responseText: JSON.stringify({ foo: 'bar' }) });
+
+    expect(request.responseType).toEqual('json');
+  });
+
+  it('defaults to the responseType set in respondWith', function() {
+    var request = new this.FakeRequest();
+    request.open();
+    request.send();
+
+    request.responseType = 'json';
+    request.respondWith({ status: 200, responseText: JSON.stringify({ foo: 'bar' }), responseType: 'text' });
+
+    expect(request.responseType).toEqual('text');
+  });
+
   it('has a text response when the responseType is blank', function() {
     var request = new this.FakeRequest();
     request.open();

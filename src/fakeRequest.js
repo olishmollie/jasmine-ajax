@@ -274,7 +274,7 @@ extend(FakeXMLHttpRequest, {
         this.eventBus.trigger('readystatechange');
 
         this.responseText = response.responseText || "";
-        this.responseType = response.responseType || "";
+        this.responseType = response.responseType || this.responseType || "";
         this.responseURL = response.responseURL || null;
         this.readyState = FakeXMLHttpRequest.DONE;
         this.responseXML = getResponseXml(response.responseText, this.getResponseHeader('content-type') || '');
